@@ -8,7 +8,6 @@ namespace CensusAnalyzerTest
 {
     public class Tests
     {
-
         //CensusAnalyser.CensusAnalyser censusAnalyser;
 
         static string indianStateCensusHeaders = "State,Population,AreaInSqKm,DensityPerSqKm";
@@ -25,7 +24,8 @@ namespace CensusAnalyzerTest
 
         static string wrongIndianStateCensusFileType = @"C:\Users\vicun\source\repos\IndianStateCensusAnalyzer\CensusAnalyzerTest\CvsFiles\IndiaStateCensusData.txt";      
         static string wrongIndianStateCodeFileType = @"C:\Users\vicun\source\repos\IndianStateCensusAnalyzer\CensusAnalyzerTest\CvsFiles\IndiaStateCode.txt";
-        
+
+        static string wrongHeader = "Name,Email,City,Phone,Zip";
        
         //US Census FilePath
        
@@ -47,13 +47,11 @@ namespace CensusAnalyzerTest
             totalRecord = new Dictionary<string, CensusDTO>();
             stateRecord = new Dictionary<string, CensusDTO>();
         }
-
         [Test]
         public void Test1()
         {
             Assert.Pass();
         }
-
         [Test]
         public void GivenIndianCensusDataFile_WhenReaded_ShouldReturnCensusDataCount()
         {
@@ -89,8 +87,8 @@ namespace CensusAnalyzerTest
         [Test]
         public void GivenWrongIndianCensusDataWrongHeader_WhenReaded_ShouldReturnCustomException()
         {
-            var censusException = Assert.Throws<CensusAnalyserException>(() => censusAnalyser.LoadCensusData(indianStateCensusFilePath, Country.INDIA, "Name,Address,city,phone"));
-            var stateException = Assert.Throws<CensusAnalyserException>(() => censusAnalyser.LoadCensusData(indianStateCodeFilePath, Country.INDIA, "Name,Address,city,phone"));
+            var censusException = Assert.Throws<CensusAnalyserException>(() => censusAnalyser.LoadCensusData(indianStateCensusFilePath, Country.INDIA, wrongHeader));
+            var stateException = Assert.Throws<CensusAnalyserException>(() => censusAnalyser.LoadCensusData(indianStateCodeFilePath, Country.INDIA, wrongHeader));
             Assert.AreEqual(CensusAnalyserException.ExceptionType.INCORRECT_HEADER, censusException.eType);
             Assert.AreEqual(CensusAnalyserException.ExceptionType.INCORRECT_HEADER, stateException.eType);
         }
